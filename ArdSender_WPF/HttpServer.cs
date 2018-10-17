@@ -16,16 +16,21 @@ namespace ArdSender_WPF
 	}
 	public class HttpServer
 	{
-		HttpListener server = new HttpListener();
+		static bool isCreate = false;
 		public HttpServer(string ip, string cpu, string gpu)
 		{
 			test(ip, cpu, gpu);
 		}
 		public async void test(string ip, string cpu, string gpu)
 		{
+			HttpListener server = new HttpListener();
 			server.Prefixes.Add("http://" + ip + "/");
-			//server.Stop();
-			server.Start();
+			server.Stop();
+			if (!isCreate)
+			{
+				server.Start();
+				isCreate = true;
+			}
 			while (true)
 			{
 				HttpListenerContext context = await server.GetContextAsync();
@@ -38,7 +43,6 @@ namespace ArdSender_WPF
 				output.Write(buffer, 0, buffer.Length);
 				output.Close();
 			}
-			server.Stop();
 		}
 	}
 }

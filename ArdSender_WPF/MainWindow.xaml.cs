@@ -29,6 +29,7 @@ namespace ArdSender_WPF
 
 		private void Window_Loaded(object sender, RoutedEventArgs e)
 		{
+			GetIP serv = new GetIP();
 			Task.Run(async () =>
 			{
 			while (true)
@@ -69,7 +70,6 @@ namespace ArdSender_WPF
 				}
 				computer.Close();
 				await Task.Delay(1000);
-				GetIP serv = new GetIP();
 				await App.Current.Dispatcher.BeginInvoke(new Action(() =>{ ip.Text = serv.ip.ToString();
 				HttpServer serv1 = new HttpServer(serv.ip.ToString(), cpu.Text.ToString(), gpu.Text.ToString());
 				}));
