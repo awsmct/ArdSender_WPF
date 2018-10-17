@@ -16,33 +16,28 @@ namespace ArdSender_WPF
 	}
 	public class HttpServer
 	{
-		static bool isCreate = false;
-		public HttpServer(string ip, string cpu, string gpu)
+		HttpListener server = new HttpListener();
+		public HttpServer(string ip)
 		{
-			test(ip, cpu, gpu);
+			test(ip);
 		}
-		public async void test(string ip, string cpu, string gpu)
+		public void test(string ip)
 		{
-			HttpListener server = new HttpListener();
 			server.Prefixes.Add("http://" + ip + "/");
-			server.Stop();
-			if (!isCreate)
+			server.Start();
+		}
+			public async void Update(string cpu, string gpu)
 			{
-				server.Start();
-				isCreate = true;
-			}
-			while (true)
-			{
-				HttpListenerContext context = await server.GetContextAsync();
-				HttpListenerRequest request = context.Request;
-				HttpListenerResponse response = context.Response;
-				string responseStr = "<html><head><meta charset='utf8'></head><body>CPUTemp:" + cpu + "<br> GPUTemp:" + gpu + "</body></html>";
-				byte[] buffer = System.Text.Encoding.UTF8.GetBytes(responseStr);
-				response.ContentLength64 = buffer.Length;
-				Stream output = response.OutputStream;
-				output.Write(buffer, 0, buffer.Length);
-				output.Close();
+					HttpListenerContext context = await server.GetContextAsync();
+					HttpListenerRequest request = context.Request;
+					HttpListenerResponse response = context.Response;
+					string responseStr = "<html><head><meta charset='utf8'></head><body>CPUTemp:" + cpu + "<br> GPUTemp:" + gpu + "</body></html>";
+					byte[] buffer = System.Text.Encoding.UTF8.GetBytes(responseStr);
+					response.ContentLength64 = buffer.Length;
+					Stream output = response.OutputStream;
+					output.Write(buffer, 0, buffer.Length);
+					output.Close();
 			}
 		}
 	}
-}
+

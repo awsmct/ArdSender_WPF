@@ -32,7 +32,8 @@ namespace ArdSender_WPF
 			GetIP serv = new GetIP();
 			Task.Run(async () =>
 			{
-			while (true)
+				HttpServer serv1 = new HttpServer(serv.ip.ToString());
+				while (true)
 			{
 				UpdateVisitor updateVisitor = new UpdateVisitor();
 				Computer computer = new Computer();
@@ -63,15 +64,16 @@ namespace ArdSender_WPF
 							if (computer.Hardware[i].Sensors[j].SensorType == SensorType.Temperature)
 							{
 								string str = (computer.Hardware[i].Sensors[j].Name + ":" + computer.Hardware[i].Sensors[j].Value.ToString());
-								await App.Current.Dispatcher.BeginInvoke(new Action(() => gpu.Text = str));
+									await App.Current.Dispatcher.BeginInvoke(new Action(() => { gpu.Text = str; ip.Text = serv.ip.ToString(); }));
 							}
 						}
 					}
 				}
 				computer.Close();
-				await Task.Delay(1000);
-				await App.Current.Dispatcher.BeginInvoke(new Action(() =>{ ip.Text = serv.ip.ToString();
-				HttpServer serv1 = new HttpServer(serv.ip.ToString(), cpu.Text.ToString(), gpu.Text.ToString());
+					await Task.Delay(1000);
+					await App.Current.Dispatcher.BeginInvoke(new Action(() =>
+				{
+						serv1.Update(cpu.Text.ToString(), gpu.Text.ToString());
 				}));
 				}
 			});
