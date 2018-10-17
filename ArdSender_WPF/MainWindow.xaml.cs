@@ -45,7 +45,7 @@ namespace ArdSender_WPF
 
 				for (int i = 0; i < computer.Hardware.Length; i++)
 				{
-					if (computer.Hardware[i].HardwareType == HardwareType.CPU)
+					if (computer.Hardware[i].HardwareType == HardwareType.CPU) //Get CPU temp 
 					{
 						for (int j = 0; j < computer.Hardware[i].Sensors.Length; j++)
 						{
@@ -57,7 +57,7 @@ namespace ArdSender_WPF
 						}
 					}
 				}
-				for (int i = 0; i < computer.Hardware.Length; i++)
+				for (int i = 0; i < computer.Hardware.Length; i++) //Get NVidia GPU temp
 				{
 					if (computer.Hardware[i].HardwareType == HardwareType.GpuNvidia)
 					{
@@ -71,7 +71,7 @@ namespace ArdSender_WPF
 						}
 					}
 				}
-					for (int i = 0; i < computer.Hardware.Length; i++)
+					for (int i = 0; i < computer.Hardware.Length; i++) //Get CPU load
 					{
 						if (computer.Hardware[i].HardwareType == HardwareType.CPU)
 						{
@@ -85,7 +85,7 @@ namespace ArdSender_WPF
 							}
 						}
 					}
-					/*for (int i = 0; i < computer.Hardware.Length; i++)
+					/*for (int i = 0; i < computer.Hardware.Length; i++) //Get NVidia GPU load (not working correctly)
 					{
 						if (computer.Hardware[i].HardwareType == HardwareType.GpuNvidia)
 						{

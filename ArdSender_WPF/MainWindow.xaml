@@ -5,7 +5,8 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:ArdSender_WPF"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="450" Loaded="Window_Loaded">
+        
+        Title="Arduino Sender" Height="450" Width="450" Loaded="Window_Loaded">
     <Grid>
         <TextBlock Name="cpu" Margin="10,10,312,379"/>
         <TextBlock Name="cpuLoad" Margin="135,10,187,379"/>
