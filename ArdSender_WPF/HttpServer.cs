@@ -24,7 +24,7 @@ namespace ArdSender_WPF
 		public async void test(string ip, string cpu, string gpu)
 		{
 			server.Prefixes.Add("http://" + ip + "/");
-			server.Stop();
+			//server.Stop();
 			server.Start();
 			while (true)
 			{
