@@ -26,12 +26,12 @@ namespace ArdSender_WPF
 			server.Prefixes.Add("http://" + ip + "/");
 			server.Start();
 		}
-			public async void Update(string cpu, string gpu)
+			public async void Update(string cpu, string gpu, string cpuLoad, string gpuLoad)
 			{
 					HttpListenerContext context = await server.GetContextAsync();
 					HttpListenerRequest request = context.Request;
 					HttpListenerResponse response = context.Response;
-					string responseStr = "<html><head><meta charset='utf8'></head><body>CPUTemp:" + cpu + "<br> GPUTemp:" + gpu + "</body></html>";
+					string responseStr = "<html><head><meta charset='utf8'></head><body>" + cpu + " " + cpuLoad +"<br> GPUTemp:" + gpu + " " +  gpuLoad + "</body></html>";
 					byte[] buffer = System.Text.Encoding.UTF8.GetBytes(responseStr);
 					response.ContentLength64 = buffer.Length;
 					Stream output = response.OutputStream;

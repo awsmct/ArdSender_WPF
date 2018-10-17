@@ -7,8 +7,10 @@
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="450" Loaded="Window_Loaded">
     <Grid>
-        <TextBlock Name="cpu" Margin="10,10,332,379"/>
-        <TextBlock Name="gpu" Margin="10,45,332,344"/>
-        <TextBlock Name="ip" Margin="10,80,332,309"/>
+        <TextBlock Name="cpu" Margin="10,10,312,379"/>
+        <TextBlock Name="cpuLoad" Margin="135,10,187,379"/>
+        <TextBlock Name="gpu" Margin="10,45,312,344"/>
+        <TextBox Name="ip" Margin="10,80,332,309"/>
+        <TextBlock Name="gpuLoad" Margin="135,45,187,344"/>
     </Grid>
 </Window>

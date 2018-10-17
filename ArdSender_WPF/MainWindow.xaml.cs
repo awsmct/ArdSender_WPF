@@ -29,6 +29,7 @@ namespace ArdSender_WPF
 
 		private void Window_Loaded(object sender, RoutedEventArgs e)
 		{
+			int delay = 1000;
 			GetIP serv = new GetIP();
 			Task.Run(async () =>
 			{
@@ -41,6 +42,7 @@ namespace ArdSender_WPF
 				computer.CPUEnabled = true;
 				computer.GPUEnabled = true;
 				computer.Accept(updateVisitor);
+
 				for (int i = 0; i < computer.Hardware.Length; i++)
 				{
 					if (computer.Hardware[i].HardwareType == HardwareType.CPU)
@@ -49,7 +51,7 @@ namespace ArdSender_WPF
 						{
 							if (computer.Hardware[i].Sensors[j].SensorType == SensorType.Temperature)
 							{
-								string str = (computer.Hardware[i].Sensors[j].Name + ":" + computer.Hardware[i].Sensors[j].Value.ToString());
+								string str = ("CPU Temp: " + computer.Hardware[i].Sensors[j].Value.ToString() + "°C");
 								await App.Current.Dispatcher.BeginInvoke(new Action(() => cpu.Text = str));
 							}
 						}
@@ -63,17 +65,46 @@ namespace ArdSender_WPF
 						{
 							if (computer.Hardware[i].Sensors[j].SensorType == SensorType.Temperature)
 							{
-								string str = (computer.Hardware[i].Sensors[j].Name + ":" + computer.Hardware[i].Sensors[j].Value.ToString());
+								string str = ("GPU Temp: " + computer.Hardware[i].Sensors[j].Value.ToString() + "°C");
 									await App.Current.Dispatcher.BeginInvoke(new Action(() => { gpu.Text = str; ip.Text = serv.ip.ToString(); }));
 							}
 						}
 					}
 				}
-				computer.Close();
-					await Task.Delay(1000);
+					for (int i = 0; i < computer.Hardware.Length; i++)
+					{
+						if (computer.Hardware[i].HardwareType == HardwareType.CPU)
+						{
+							for (int j = 0; j < computer.Hardware[i].Sensors.Length; j++)
+							{
+								if (computer.Hardware[i].Sensors[j].SensorType == SensorType.Load)
+								{
+									string str = ("CPU Load: " + computer.Hardware[i].Sensors[j].Value.ToString() + "%");
+									await App.Current.Dispatcher.BeginInvoke(new Action(() => { cpuLoad.Text = str; }));
+								}
+							}
+						}
+					}
+					/*for (int i = 0; i < computer.Hardware.Length; i++)
+					{
+						if (computer.Hardware[i].HardwareType == HardwareType.GpuNvidia)
+						{
+							for (int j = 0; j < computer.Hardware[i].Sensors.Length; j++)
+							{
+								if (computer.Hardware[i].Sensors[j].SensorType == SensorType.Load)
+								{
+									string str = ("GPU Load: " + computer.Hardware[i].Sensors[j].Value.ToString() + "%");
+									await App.Current.Dispatcher.BeginInvoke(new Action(() => { gpuLoad.Text = str; }));
+								}
+							}
+						}
+					}
+					*/
+					computer.Close();
+					await Task.Delay(delay);
 					await App.Current.Dispatcher.BeginInvoke(new Action(() =>
 				{
-						serv1.Update(cpu.Text.ToString(), gpu.Text.ToString());
+						serv1.Update(cpu.Text.ToString(), gpu.Text.ToString(), cpuLoad.Text.ToString(), gpuLoad.Text.ToString());
 				}));
 				}
 			});
