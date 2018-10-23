@@ -38,11 +38,10 @@ namespace ArdSender_WPF
 			{
 				UpdateVisitor updateVisitor = new UpdateVisitor();
 				Computer computer = new Computer();
-				computer.Open();
 				computer.CPUEnabled = true;
 				computer.GPUEnabled = true;
+				computer.Open();
 				computer.Accept(updateVisitor);
-
 				for (int i = 0; i < computer.Hardware.Length; i++)
 				{
 					if (computer.Hardware[i].HardwareType == HardwareType.CPU) //Get CPU temp 
@@ -85,7 +84,7 @@ namespace ArdSender_WPF
 							}
 						}
 					}
-					/*for (int i = 0; i < computer.Hardware.Length; i++) //Get NVidia GPU load (not working correctly)
+					for (int i = 0; i < computer.Hardware.Length; i++) //Get NVidia GPU load (not working correctly)
 					{
 						if (computer.Hardware[i].HardwareType == HardwareType.GpuNvidia)
 						{
@@ -99,7 +98,6 @@ namespace ArdSender_WPF
 							}
 						}
 					}
-					*/
 					computer.Close();
 					await Task.Delay(delay);
 					await App.Current.Dispatcher.BeginInvoke(new Action(() =>
